@@ -1,5 +1,5 @@
 # Configuration File - Nginx Server Configs
-# Combined from https://wordpress.org/support/article/nginx, https://github.com/h5bp/server-configs-nginx, and https://nginx.org/en/docs/
+# https://nginx.org/en/docs/
 
 # Run as a unique, less privileged user for security reasons.
 # Default: nobody nobody
@@ -14,7 +14,6 @@ user nginx nginx;
 # Default: 1
 # https://nginx.org/en/docs/ngx_core_module.html#worker_processes
 worker_processes auto;
-worker_cpu_affinity auto;
 
 # Maximum number of open files per worker process.
 # Should be > worker_connections.
@@ -58,19 +57,6 @@ http {
 
   # Set character encodings.
   include h5bp/media_types/character_encodings.conf;
-  
-  # PHP max upload limit cannot be larger than this (Wordpress NGINX default)
-  client_max_body_size 13m;
-
-  # Index files to look for
-  index index.php index.html index.htm;
-
-  # Upstream to abstract backend connection(s) for PHP (Wordpress NGINX default)
-  upstream php {
-        # this should match value of "listen" directive in php-fpm pool
-        server unix:/run/php-fpm/www.sock;
-        # server 127.0.0.1:9000;
-  }
 
   # Include $http_x_forwarded_for within default format used in log files
   # https://nginx.org/en/docs/http/ngx_http_log_module.html#log_format
